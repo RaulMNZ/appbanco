@@ -1,0 +1,222 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  user-select: none;
+}
+
+body {
+  background-color: #e0e5ec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 375px;
+  height: 812px;
+  background-color: #0a0a0a;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+  border-radius: 40px;
+  border: 8px solid #1f1f1f;
+}
+@media (max-width: 400px) {
+  .app-container {
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+  }
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- Botão Principal --- */
+.btn-primary {
+  background: linear-gradient(135deg, #ff0066 0%, #ff007f 100%);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 10px 20px rgba(255, 0, 102, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:active {
+  transform: scale(0.95);
+  box-shadow: 0 5px 10px rgba(255, 0, 102, 0.2);
+}
+.btn-bottom {
+  position: absolute;
+  bottom: 40px;
+  width: calc(100% - 60px);
+  left: 30px;
+  z-index: 2;
+}
+
+/* --- Splash Screen --- */
+.splash-screen { background-color: #0a0a0a; }
+.splash-bg-shapes { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 0; }
+.splash-shape { position: absolute; border-radius: 50%; filter: blur(2px); }
+.s-purple { width: 300px; height: 300px; background: #8a2be2; top: 30%; left: -10%; }
+.s-yellow { width: 200px; height: 300px; background: #ffcc00; top: 35%; right: -20%; }
+.s-cyan { width: 250px; height: 200px; background: #00e5ff; bottom: -5%; left: -20%; }
+.s-pink { width: 150px; height: 150px; background: #ff0066; top: -5%; right: -5%; }
+
+.splash-content { position: relative; z-index: 1; padding: 100px 30px; color: white; }
+.splash-content h1 { font-size: 32px; font-weight: 300; line-height: 1.2; margin-bottom: 15px; }
+.splash-content h1 span { font-weight: 800; font-size: 42px; background: -webkit-linear-gradient(#fff, #aaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+.subtitle { color: #aaa; font-size: 16px; }
+
+/* --- Login Screen --- */
+.login-screen {
+  background-color: #0a0a0a;
+  padding: 40px 30px;
+  justify-content: center;
+}
+.login-header { margin-bottom: 40px; color: white; }
+.login-header h2 { font-size: 28px; margin-bottom: 8px; }
+.login-header p { color: #888; font-size: 14px; }
+
+.login-form { display: flex; flex-direction: column; gap: 20px; }
+.input-group { display: flex; flex-direction: column; gap: 8px; }
+.input-group label { color: #aaa; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.input-group input {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  padding: 16px;
+  border-radius: 16px;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.input-group input:focus { border-color: #8a2be2; }
+.forgot-password { color: #00e5ff; font-size: 13px; text-align: right; cursor: pointer; margin-bottom: 20px; }
+.register-link { text-align: center; color: #888; font-size: 14px; margin-top: 30px; }
+.register-link span { color: #ff0066; font-weight: 600; cursor: pointer; }
+
+/* --- Headers --- */
+.dark-header { display: flex; justify-content: space-between; align-items: center; padding: 50px 25px 20px 25px; background-color: #0a0a0a; color: white; z-index: 2; }
+.dark-header h2 { font-size: 18px; font-weight: 600; }
+.menu-icon { font-size: 24px; cursor: pointer; font-weight: bold; }
+.profile-pic { width: 36px; height: 36px; background: linear-gradient(135deg, #8a2be2, #ff0066); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 16px; border: 2px solid #222; cursor: pointer; }
+
+/* --- Dashboard --- */
+.dashboard-screen { background-color: #0a0a0a; }
+.dashboard-body { background-color: #ffffff; flex: 1; border-radius: 35px 35px 0 0; padding: 30px 25px; overflow-y: auto; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.mt-20 { margin-top: 35px; }
+.section-header h3 { font-size: 18px; color: #111; font-weight: 700; }
+.more-options { font-size: 14px; color: #ff0066; font-weight: 600; cursor: pointer; }
+
+/* Ações Rápidas */
+.quick-actions { display: flex; justify-content: space-between; margin-top: 25px; }
+.action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #444; cursor: pointer; }
+.action-btn .icon { width: 50px; height: 50px; background-color: #f0f4f8; border-radius: 16px; display: flex; justify-content: center; align-items: center; font-size: 22px; transition: background-color 0.2s; }
+.action-btn:active .icon { background-color: #e0e5ec; }
+
+/* Cartão */
+.credit-card { width: 100%; height: 200px; background-color: #111; border-radius: 25px; position: relative; overflow: hidden; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; color: white; box-shadow: 0 15px 30px rgba(0,0,0,0.15); cursor: pointer; transition: transform 0.2s; }
+.credit-card:active { transform: scale(0.97); }
+.card-bg-shape { position: absolute; border-radius: 50%; opacity: 0.8; }
+.shape-pink { width: 120px; height: 120px; background: #ff0066; top: -30px; right: -20px; }
+.shape-purple { width: 160px; height: 160px; background: #8a2be2; bottom: -50px; right: 20px; }
+.shape-yellow { width: 80px; height: 80px; background: #ffcc00; bottom: 20px; right: -30px; }
+.shape-cyan { width: 100px; height: 100px; background: #00e5ff; bottom: -30px; left: 10px; }
+.card-header { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.card-number { font-size: 15px; letter-spacing: 3px; font-family: monospace; }
+.card-brand { font-weight: 800; font-style: italic; font-size: 20px; }
+.card-footer { position: relative; z-index: 1; }
+.card-label { display: block; font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;}
+.card-balance { font-size: 28px; font-weight: 700; }
+
+/* Transações */
+.transactions-list { display: flex; flex-direction: column; gap: 20px; padding-bottom: 20px; }
+.transaction-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+.transaction-item:last-child { border-bottom: none; }
+.tx-icon { width: 50px; height: 50px; background-color: #f8f9fa; border-radius: 16px; display: flex; justify-content: center; align-items: center; font-size: 22px; margin-right: 15px; }
+.tx-details { flex: 1; }
+.tx-details h4 { font-size: 16px; color: #111; margin-bottom: 4px; }
+.tx-details p { font-size: 12px; color: #888; }
+.tx-amount { font-size: 16px; font-weight: 700; color: #111; }
+.tx-amount.positive { color: #00c853; }
+
+/* --- Analytics --- */
+.analytics-screen { background-color: #0a0a0a; }
+.analytics-balance { text-align: center; color: white; margin-top: 10px; }
+.analytics-balance p { font-size: 14px; color: #888; margin-bottom: 8px; }
+.analytics-balance h1 { font-size: 36px; font-weight: 700; margin-bottom: 10px; }
+.growth-badge { display: inline-block; background-color: rgba(0, 200, 83, 0.2); color: #00e676; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.chart-container { margin-top: 30px; padding: 0 10px; }
+.line-chart { width: 100%; height: auto; overflow: visible; }
+.chart-labels { display: flex; justify-content: space-between; padding: 15px 25px; color: #666; font-size: 12px; font-weight: 600; }
+.chart-labels .active { background-color: #ff0066; color: white; padding: 4px 12px; border-radius: 12px; }
+
+.bottom-sheet { background-color: white; position: absolute; bottom: 0; left: 0; width: 100%; height: 35%; border-radius: 35px 35px 0 0; padding: 15px 25px 25px 25px; box-shadow: 0 -10px 40px rgba(0,0,0,0.8); }
+.drag-handle { width: 40px; height: 5px; background-color: #ddd; border-radius: 3px; margin: 0 auto 20px auto; }
+
+/* --- Validação e Menu Lateral --- */
+.error-message {
+  color: #ff3366;
+  font-size: 13px;
+  background-color: rgba(255, 51, 102, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 75%;
+  height: 100%;
+  background-color: #111;
+  z-index: 100;
+  transition: left 0.3s ease-in-out;
+  padding: 50px 25px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+}
+
+.sidebar-menu.open { left: 0; }
+.menu-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 99; }
+.sidebar-header { margin-bottom: 40px; color: white; }
+.profile-pic.large { width: 60px; height: 60px; font-size: 28px; margin-bottom: 15px; }
+.sidebar-header h3 { font-size: 20px; text-transform: capitalize; }
+.sidebar-header p { font-size: 13px; color: #888; margin-top: 5px; }
+
+.sidebar-links { display: flex; flex-direction: column; gap: 20px; }
+.sidebar-links button { background: none; border: none; color: white; text-align: left; font-size: 16px; padding: 10px 0; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: color 0.2s; }
+.sidebar-links button:hover { color: #ff0066; }
+.sidebar-links .logout-btn { color: #ff3366; margin-top: 40px; font-weight: bold; }
+.close-menu { position: absolute; top: 25px; right: 25px; color: white; font-size: 20px; cursor: pointer; }
+
+/* Cursor pointer para elementos interativos */
+.transaction-item, .more-options, .forgot-password, .register-link span { cursor: pointer; }
