@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
 
-// Componente de Cartão reutilizável
 const CreditCard = ({ onClick }) => (
   <div className="credit-card" onClick={onClick}>
     <div className="card-bg-shape shape-pink"></div>
@@ -13,7 +12,7 @@ const CreditCard = ({ onClick }) => (
       <span className="card-brand">VISA</span>
     </div>
     <div className="card-footer">
-      <span className="card-label">Saldo Atual</span>
+      <span className="card-label">Saldo</span>
       <span className="card-balance">R$ 4.537,24</span>
     </div>
   </div>
@@ -25,38 +24,17 @@ export default function App() {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
-  // Função para simular botões "em construção"
-  const handleGenericClick = (acao) => {
-    alert(`Ação "${acao}" acionada! (Função em desenvolvimento)`);
-  };
-
-  // Validação de E-mail
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    if (!emailRegex.test(userEmail)) {
+    if (!userEmail.includes('@')) {
       setLoginError('Por favor, insira um e-mail válido.');
       return;
     }
-    if (password.length < 4) {
-      setLoginError('A senha deve ter pelo menos 4 caracteres.');
-      return;
-    }
-    
     setLoginError('');
     setCurrentPage('dashboard');
   };
-
-  const handleLogout = () => {
-    setIsMenuOpen(false);
-    setUserEmail('');
-    setPassword('');
-    setCurrentPage('login');
-  };
-
-  // --- RENDERS DAS TELAS ---
 
   const renderSplashScreen = () => (
     <div className="screen splash-screen">
@@ -67,7 +45,7 @@ export default function App() {
         <div className="splash-shape s-pink"></div>
       </div>
       <div className="splash-content">
-        <h1>Seu caminho<br/><span>para o Sucesso</span></h1>
+        <h1>Seu caminho<br/><span>para o sucesso</span></h1>
         <p className="subtitle">O futuro das suas finanças está aqui.</p>
       </div>
       <button className="btn-primary btn-bottom" onClick={() => setCurrentPage('login')}>
@@ -90,10 +68,7 @@ export default function App() {
             type="email" 
             value={userEmail}
             placeholder="Ex: usuario@banco.com"
-            onChange={(e) => {
-              setUserEmail(e.target.value);
-              setLoginError('');
-            }}
+            onChange={(e) => setUserEmail(e.target.value)}
           />
         </div>
         <div className="input-group">
@@ -102,50 +77,43 @@ export default function App() {
             type="password" 
             value={password}
             placeholder="••••••••" 
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setLoginError('');
-            }}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         
         {loginError && <div className="error-message">{loginError}</div>}
         
-        <div className="forgot-password" onClick={() => handleGenericClick('Recuperar Senha')}>
-          Esqueceu a senha?
-        </div>
+        <div className="forgot-password">Esqueceu a senha?</div>
         
         <button type="submit" className="btn-primary">Entrar</button>
       </form>
       
       <div className="register-link">
-        Não tem uma conta? <span onClick={() => handleGenericClick('Criar Conta')}>Cadastre-se</span>
+        Não tem uma conta? <span>Cadastre-se</span>
       </div>
     </div>
   );
 
   const renderDashboardScreen = () => {
     const transactions = [
-      { id: 1, icon: '🚕', title: 'Uber', time: 'Hoje, 14:30', amount: 13.50, type: 'out' },
-      { id: 2, icon: '💵', title: 'Salário', time: 'Ontem', amount: 3200.00, type: 'in' },
-      { id: 3, icon: '🛍️', title: 'Amazon', time: '12 Nov', amount: 255.90, type: 'out' },
-      { id: 4, icon: '☕', title: 'Cafeteria', time: '10 Nov', amount: 18.00, type: 'out' },
+      { id: 1, icon: '🚕', title: 'Táxi', time: 'Agora mesmo', amount: 13.00 },
+      { id: 2, icon: '🛒', title: 'Mercado', time: '12:00', amount: 56.00 },
+      { id: 3, icon: '🛍️', title: 'Shopping', time: '08:00', amount: 255.00 },
+      { id: 4, icon: '🏋️', title: 'Academia', time: '12/06/25', amount: 32.00 },
     ];
 
     return (
       <div className="screen dashboard-screen">
-        {/* Menu Lateral Deslizante */}
         <div className={`sidebar-menu ${isMenuOpen ? 'open' : ''}`}>
           <div className="sidebar-header">
             <div className="profile-pic large">👨🏻‍.</div>
             <h3>{userEmail ? userEmail.split('@')[0] : 'Usuário'}</h3>
-            <p>{userEmail}</p>
           </div>
           <div className="sidebar-links">
-            <button onClick={() => handleGenericClick('Meu Perfil')}>👤 Meu Perfil</button>
-            <button onClick={() => handleGenericClick('Configurações')}>⚙️ Configurações</button>
-            <button onClick={() => handleGenericClick('Ajuda')}>❓ Ajuda</button>
-            <button className="logout-btn" onClick={handleLogout}>🚪 Sair da Conta</button>
+            <button onClick={() => {setIsDarkMode(!isDarkMode); setIsMenuOpen(false);}}>
+              {isDarkMode ? '☀️ Mudar para Claro' : '🌙 Mudar para Escuro'}
+            </button>
+            <button className="logout-btn" onClick={() => setCurrentPage('login')}>🚪 Sair</button>
           </div>
           <div className="close-menu" onClick={() => setIsMenuOpen(false)}>✕</div>
         </div>
@@ -153,42 +121,40 @@ export default function App() {
 
         <header className="dark-header">
           <div className="menu-icon" onClick={() => setIsMenuOpen(true)}>∷</div>
-          <h2>Início</h2>
+          <h2>Banco</h2>
           <div className="profile-pic" onClick={() => setIsMenuOpen(true)}>👨🏻‍.</div>
         </header>
 
         <div className="dashboard-body">
-          <div className="section-header">
-            <h3>Meus Cartões</h3>
-            <span className="more-options" onClick={() => handleGenericClick('Adicionar Cartão')}>+ Adicionar</span>
-          </div>
-          
-          <CreditCard onClick={() => setCurrentPage('analytics')} />
-
-          <div className="quick-actions">
-            <div className="action-btn" onClick={() => handleGenericClick('Enviar PIX')}><span className="icon">💸</span>Enviar</div>
-            <div className="action-btn" onClick={() => handleGenericClick('Receber PIX')}><span className="icon">📥</span>Receber</div>
-            <div className="action-btn" onClick={() => handleGenericClick('Pagar Boleto')}><span className="icon">🧾</span>Pagar</div>
-          </div>
-
-          <div className="section-header mt-20">
-            <h3>Atividade Recente</h3>
-            <span className="more-options" onClick={() => handleGenericClick('Ver Extrato Completo')}>Ver tudo</span>
-          </div>
-
-          <div className="transactions-list">
-            {transactions.map(tx => (
-              <div className="transaction-item" key={tx.id} onClick={() => handleGenericClick(`Detalhes da transação: ${tx.title}`)}>
-                <div className="tx-icon">{tx.icon}</div>
-                <div className="tx-details">
-                  <h4>{tx.title}</h4>
-                  <p>{tx.time}</p>
-                </div>
-                <div className={`tx-amount ${tx.type === 'in' ? 'positive' : ''}`}>
-                  {tx.type === 'in' ? '+' : '-'} R$ {tx.amount.toFixed(2).replace('.', ',')}
-                </div>
+          <div className="dashboard-grid">
+            <div className="dashboard-column">
+              <div className="section-header">
+                <h3>Cartões</h3>
+                <span className="more-options">••</span>
               </div>
-            ))}
+              <CreditCard onClick={() => setCurrentPage('analytics')} />
+            </div>
+
+            <div className="dashboard-column">
+              <div className="section-header mt-mobile-only">
+                <h3>Transações</h3>
+                <span className="more-options">••</span>
+              </div>
+              <div className="transactions-list">
+                {transactions.map(tx => (
+                  <div className="transaction-item" key={tx.id}>
+                    <div className="tx-icon">{tx.icon}</div>
+                    <div className="tx-details">
+                      <h4>{tx.title}</h4>
+                      <p>{tx.time}</p>
+                    </div>
+                    <div className="tx-amount">
+                      R$ {tx.amount.toFixed(2).replace('.', ',')}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -246,11 +212,13 @@ export default function App() {
   );
 
   return (
-    <div className="app-container">
-      {currentPage === 'splash' && renderSplashScreen()}
-      {currentPage === 'login' && renderLoginScreen()}
-      {currentPage === 'dashboard' && renderDashboardScreen()}
-      {currentPage === 'analytics' && renderAnalyticsScreen()}
+    <div className={`app-container ${isDarkMode ? 'dark-theme' : ''}`}>
+      <div className="app-content">
+        {currentPage === 'splash' && renderSplashScreen()}
+        {currentPage === 'login' && renderLoginScreen()}
+        {currentPage === 'dashboard' && renderDashboardScreen()}
+        {currentPage === 'analytics' && renderAnalyticsScreen()}
+      </div>
     </div>
   );
 }
